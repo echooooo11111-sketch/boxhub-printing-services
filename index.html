@@ -30,10 +30,575 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+
+    <style>
+      /* ============================================================
+         RESPONSIVE OVERRIDES ONLY — All design/logic untouched
+         ============================================================ */
+
+      /* Base box-sizing fix */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* ── Container fluid padding ── */
+      .container {
+        width: 100%;
+        max-width: 1280px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      @media (min-width: 640px) {
+        .container {
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .container {
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+        }
+      }
+
+      /* ── NAVIGATION ── */
+      #navbar {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      /* ── HERO SECTION ── */
+      header {
+        padding-top: 5rem;
+        min-height: 100svh;
+      }
+
+      /* Hero heading — fluid scaling */
+      header h2 {
+        font-size: clamp(2.2rem, 7vw, 5.5rem);
+        line-height: 1.1;
+        word-break: break-word;
+      }
+
+      /* Hero paragraph — readable on small screens */
+      header p.text-lg {
+        font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+      }
+
+      /* Hero CTA buttons — stack on very small screens */
+      @media (max-width: 400px) {
+        header .flex.flex-wrap {
+          flex-direction: column;
+          align-items: center;
+        }
+        header .flex.flex-wrap a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Hero visual card — prevent overflow on tablet */
+      @media (max-width: 1023px) {
+        header .hidden.lg\:block {
+          display: none !important;
+        }
+      }
+
+      /* ── TRUST BAR ── */
+      @media (max-width: 639px) {
+        .grid.grid-cols-2.lg\:grid-cols-4 {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+        .grid.grid-cols-2.lg\:grid-cols-4 h4 {
+          font-size: 0.85rem;
+        }
+        .grid.grid-cols-2.lg\:grid-cols-4 p {
+          font-size: 0.7rem;
+        }
+      }
+
+      /* ── ABOUT SECTION ── */
+      #about {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+      }
+
+      #about h2 {
+        font-size: clamp(1.8rem, 5vw, 3.5rem);
+        line-height: 1.2;
+      }
+
+      /* The stat card at bottom-left: prevent overflow on mobile */
+      #about .absolute.-bottom-10.-left-10 {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin-top: 1.5rem;
+        max-width: 100%;
+        border-radius: 1.5rem;
+      }
+
+      @media (min-width: 768px) {
+        #about .absolute.-bottom-10.-left-10 {
+          position: absolute;
+          bottom: -2.5rem;
+          left: -2.5rem;
+          margin-top: 0;
+          max-width: 18rem;
+        }
+      }
+
+      /* About image aspect ratio — taller on mobile */
+      #about .aspect-square {
+        border-radius: 2rem;
+      }
+
+      @media (max-width: 639px) {
+        #about .aspect-square {
+          border-radius: 1.5rem;
+        }
+        /* Give bottom space for the stat card when it's absolute */
+        #about .relative {
+          padding-bottom: 0;
+        }
+      }
+
+      /* ── SERVICES SECTION ── */
+      #services {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+
+      #services h2 {
+        font-size: clamp(1.8rem, 5vw, 3rem);
+      }
+
+      /* Service grid: 1 col on mobile, 2 on tablet, 3 on desktop */
+      #services .grid.md\:grid-cols-2.lg\:grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      @media (min-width: 640px) {
+        #services .grid.md\:grid-cols-2.lg\:grid-cols-3 {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.25rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        #services .grid.md\:grid-cols-2.lg\:grid-cols-3 {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+      }
+
+      /* Service cards — compact padding on mobile */
+      .service-card {
+        padding: 1.5rem;
+        border-radius: 2rem;
+      }
+
+      @media (min-width: 640px) {
+        .service-card {
+          padding: 2rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .service-card {
+          padding: 2.5rem;
+          border-radius: 3rem;
+        }
+      }
+
+      /* ── MODAL ── */
+      #modal-overlay {
+        padding: 0.75rem;
+      }
+
+      @media (min-width: 768px) {
+        #modal-overlay {
+          padding: 2rem;
+        }
+      }
+
+      #modal-container {
+        border-radius: 2rem;
+        max-height: 95svh;
+      }
+
+      @media (min-width: 768px) {
+        #modal-container {
+          border-radius: 3.5rem;
+        }
+      }
+
+      /* Modal header padding */
+      #modal-container .flex.items-center.justify-between {
+        padding: 1.25rem 1.5rem;
+      }
+
+      @media (min-width: 768px) {
+        #modal-container .flex.items-center.justify-between {
+          padding: 2rem 3rem;
+        }
+      }
+
+      /* Modal body padding */
+      .modal-content-area {
+        padding: 1.25rem 1.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .modal-content-area {
+          padding: 3rem;
+        }
+      }
+
+      /* Modal gallery — 1 col on mobile, 2 on tablet+ */
+      .modal-content-area .grid.grid-cols-1.md\:grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      @media (min-width: 600px) {
+        .modal-content-area .grid.grid-cols-1.md\:grid-cols-2 {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+        }
+      }
+
+      /* Modal footer */
+      #modal-container > div:last-child {
+        padding: 1rem 1.5rem;
+      }
+
+      @media (min-width: 768px) {
+        #modal-container > div:last-child {
+          padding: 1.5rem 2rem;
+        }
+      }
+
+      /* Modal title text */
+      #modal-title-area h3 {
+        font-size: clamp(1.1rem, 4vw, 1.875rem);
+      }
+
+      /* ── CLIENTS MARQUEE ── */
+      #clients {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+      }
+
+      #clients h2 {
+        font-size: clamp(1.6rem, 5vw, 3.5rem);
+      }
+
+      .client-logo-box {
+        height: clamp(80px, 12vw, 160px);
+        width: clamp(120px, 18vw, 250px);
+        padding: clamp(0.75rem, 2vw, 2.5rem);
+        border-radius: clamp(10px, 1.5vw, 20px);
+      }
+
+      /* ── CONTACT SECTION ── */
+      #contact {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+
+      /* The teal card */
+      #contact > .container > div {
+        padding: 2rem 1.5rem;
+        border-radius: 2rem;
+      }
+
+      @media (min-width: 640px) {
+        #contact > .container > div {
+          padding: 3rem 2.5rem;
+          border-radius: 3rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        #contact > .container > div {
+          padding: 5rem;
+          border-radius: 4rem;
+        }
+      }
+
+      /* Contact grid */
+      #contact .grid.lg\:grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      @media (min-width: 1024px) {
+        #contact .grid.lg\:grid-cols-2 {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 5rem;
+        }
+      }
+
+      #contact h2 {
+        font-size: clamp(1.6rem, 5vw, 4.375rem);
+        line-height: 1.1;
+      }
+
+      /* Contact info cards — smaller on mobile */
+      @media (max-width: 639px) {
+        #contact .w-16.h-16.bg-white\/10 {
+          width: 3rem;
+          height: 3rem;
+        }
+        #contact .font-black.text-2xl {
+          font-size: 1rem;
+          word-break: break-all;
+        }
+      }
+
+      /* Form card */
+      #contact .bg-white.rounded-\[3rem\] {
+        padding: 1.5rem;
+        border-radius: 1.75rem;
+      }
+
+      @media (min-width: 640px) {
+        #contact .bg-white.rounded-\[3rem\] {
+          padding: 2.5rem;
+          border-radius: 3rem;
+        }
+      }
+
+      /* Form grid — stack on small mobile */
+      #contact .grid.md\:grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      @media (min-width: 480px) {
+        #contact .grid.md\:grid-cols-2 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Submit button */
+      #submit-btn {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        font-size: 1rem;
+        border-radius: 1rem;
+      }
+
+      @media (min-width: 640px) {
+        #submit-btn {
+          padding-top: 1.5rem;
+          padding-bottom: 1.5rem;
+          font-size: 1.25rem;
+          border-radius: 1.25rem;
+        }
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+
+      /* Footer grid — 1 col on mobile */
+      footer .grid.grid-cols-1.md\:grid-cols-4 {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      @media (min-width: 640px) {
+        footer .grid.grid-cols-1.md\:grid-cols-4 {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2.5rem;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        footer .grid.grid-cols-1.md\:grid-cols-4 {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 4rem;
+          margin-bottom: 5rem;
+        }
+      }
+
+      /* Footer brand col — full width on mobile */
+      footer .col-span-1.md\:col-span-2 {
+        grid-column: span 1;
+      }
+
+      @media (min-width: 640px) {
+        footer .col-span-1.md\:col-span-2 {
+          grid-column: span 2;
+        }
+      }
+
+      /* Footer bottom bar */
+      footer .pt-12.border-t {
+        padding-top: 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      @media (min-width: 768px) {
+        footer .pt-12.border-t {
+          flex-direction: row;
+          align-items: center;
+          padding-top: 2rem;
+        }
+      }
+
+      /* ── TOUCH/TAP IMPROVEMENTS ── */
+      /* Larger tap targets on mobile */
+      @media (max-width: 639px) {
+        .nav-link {
+          padding: 0.5rem 0;
+          display: inline-block;
+        }
+        #contact input,
+        #contact select,
+        #contact textarea {
+          font-size: 16px; /* Prevents iOS zoom on focus */
+        }
+        /* Service card icons stay sized */
+        .service-card .w-16.h-16 {
+          width: 3rem;
+          height: 3rem;
+        }
+        .service-card h3 {
+          font-size: 1.1rem;
+        }
+        .service-card p {
+          font-size: 0.85rem;
+          margin-bottom: 1rem;
+        }
+        .service-card .flex.items-center.gap-2 {
+          font-size: 0.85rem;
+        }
+      }
+
+      /* ── ABOUT SECTION — grid responsive ── */
+      #about .grid.lg\:grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      @media (min-width: 1024px) {
+        #about .grid.lg\:grid-cols-2 {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 5rem;
+        }
+      }
+
+      /* Add bottom padding to about image col for the floating stat card */
+      @media (min-width: 768px) {
+        #about .grid.lg\:grid-cols-2 > div:last-child {
+          padding-bottom: 3rem;
+        }
+      }
+
+      /* ── HERO GRID ── */
+      header .grid.lg\:grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      @media (min-width: 1024px) {
+        header .grid.lg\:grid-cols-2 {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 4rem;
+        }
+      }
+
+      /* ── ABOUT INNER MAX WIDTH ── */
+      #about .max-w-5xl {
+        max-width: 100%;
+      }
+
+      @media (min-width: 1024px) {
+        #about .max-w-5xl {
+          max-width: 64rem;
+        }
+      }
+
+      /* ── MARQUEE PAUSE ON HOVER ── */
+      .marquee-container:hover .marquee-content {
+        animation-play-state: paused;
+      }
+
+      /* ── PREVENT HORIZONTAL SCROLL FROM BLOBS ── */
+      header {
+        overflow-x: hidden;
+      }
+
+      /* ── MOBILE MENU OVERLAY ── */
+      #mobile-menu {
+        overflow-y: auto;
+      }
+
+      /* ── GALLERY ITEM ASPECT RATIO — consistent on all sizes ── */
+      .gallery-item {
+        aspect-ratio: 4 / 3;
+      }
+
+      @media (max-width: 479px) {
+        .gallery-item {
+          aspect-ratio: 3 / 2;
+        }
+      }
+
+      /* ── CLIENT SECTION HEADING ── */
+      #clients .text-center {
+        padding: 0 1rem;
+      }
+
+      /* ── SAFE AREA INSETS (notched phones) ── */
+      @supports (padding: max(0px)) {
+        nav {
+          padding-left: max(1.5rem, env(safe-area-inset-left));
+          padding-right: max(1.5rem, env(safe-area-inset-right));
+        }
+        footer {
+          padding-bottom: max(3rem, calc(1.5rem + env(safe-area-inset-bottom)));
+        }
+      }
+
+      /* ── ANIMATED FADE IN UP (scroll observer) ── */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fadeInUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+    </style>
   </head>
   <body class="bg-slate-50 text-slate-900">
     <!-- Navigation -->
@@ -116,25 +681,7 @@
     >
       <div class="flex justify-between items-center mb-16">
         <div class="flex items-center gap-3">
-          <div
-            class="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-              ></path>
-            </svg>
-          </div>
+          <img src="logo.png" alt="Boxhub Logo" class="logo-box" />
           <span class="font-black text-slate-900">BOXHUB</span>
         </div>
         <button id="menu-close" class="text-slate-900 p-2">
@@ -476,7 +1023,6 @@
                 class="text-4xl md:text-6xl font-black text-slate-900 mb-8 leading-tight"
               >
                 Empower your Brand to
-
                 <span class="text-teal-600">Speak</span>
               </h2>
               <p class="text-slate-600 text-lg leading-relaxed mb-8">
@@ -534,7 +1080,7 @@
                     <h5 class="font-black text-slate-900 mb-1">Our Mission</h5>
                     <p class="text-slate-500 text-sm">
                       To provide quality prints at competitive prices, delivered
-                      on time and tailored to our clients’ needs.
+                      on time and tailored to our clients' needs.
                     </p>
                   </div>
                 </div>
@@ -544,7 +1090,6 @@
               <div
                 class="aspect-square bg-teal-600 rounded-[4rem] overflow-hidden shadow-2xl"
               >
-                <!-- Placeholder for company image -->
                 <img
                   src="https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?auto=format&fit=crop&q=80&w=800"
                   alt="Printing Press"
@@ -583,7 +1128,6 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Service Cards (Triggering Modal) -->
           <div
             onclick="openService('offset')"
             class="service-card group bg-slate-50 p-10 rounded-[3rem] cursor-pointer border border-transparent hover:border-teal-500/30"
@@ -721,7 +1265,7 @@
               </svg>
             </div>
           </div>
-          <!-- Digital -->
+
           <div
             onclick="openService('digital')"
             class="service-card group bg-slate-50 p-10 rounded-[3rem] cursor-pointer border border-transparent hover:border-teal-500/30"
@@ -769,7 +1313,6 @@
             </div>
           </div>
 
-          <!-- Custom -->
           <div
             onclick="openService('custom')"
             class="service-card group bg-slate-50 p-10 rounded-[3rem] cursor-pointer border border-transparent hover:border-teal-500/30"
@@ -817,7 +1360,6 @@
             </div>
           </div>
 
-          <!-- Embroidery -->
           <div
             onclick="openService('embroidery')"
             class="service-card group bg-slate-50 p-10 rounded-[3rem] cursor-pointer border border-transparent hover:border-teal-500/30"
@@ -930,7 +1472,6 @@
 
     <!--SERVICES FUNC-->
     <script>
-      // Service Data Repository
       const serviceData = {
         offset: {
           title: "Offset Print",
@@ -965,7 +1506,6 @@
             "Eye-catching large prints for outdoors, including signs, banners, and vehicle graphics that last.",
           images: ["van.jpg", "xstands.jpg", "vinyl.jpg", "outdoor.jpg"],
         },
-
         custom: {
           title: "Custom Items",
           icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-600"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><line x1="3" x2="21" y1="6" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg>`,
@@ -973,7 +1513,6 @@
             "Custom corporate and lifestyle products made to match your brand and leave an impression.",
           images: ["led.jpg", "maskaprons.jpg", "laptopmats.jpg", "tote.jpg"],
         },
-
         embroidery: {
           title: "Embroidery",
           icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-teal-600"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /></svg>`,
@@ -994,40 +1533,36 @@
         const titleArea = document.getElementById("modal-title-area");
         const bodyContent = document.getElementById("modal-body-content");
 
-        // Set Header
         titleArea.innerHTML = `
-            <div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center">
-                ${data.icon}
-            </div>
-            <div>
-                <h3 class="text-3xl font-extrabold text-slate-900">${data.title}</h3>
-                <p class="text-teal-600 text-sm font-bold uppercase tracking-widest">Project Showcase</p>
-            </div>
+          <div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center">
+            ${data.icon}
+          </div>
+          <div>
+            <h3 class="text-3xl font-extrabold text-slate-900">${data.title}</h3>
+            <p class="text-teal-600 text-sm font-bold uppercase tracking-widest">Project Showcase</p>
+          </div>
         `;
 
-        // Set Body with Gallery Grid
         bodyContent.innerHTML = `
-            <div class="mb-12">
-                <p class="text-slate-600 text-xl leading-relaxed max-w-3xl">${data.description}</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                ${data.images
-                  .map(
-                    (img, index) => `
-                    <div class="gallery-item group relative aspect-[4/3] bg-slate-100">
-                        <img src="${img}" alt="${data.title} sample ${index + 1}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
-                            <span class="text-white font-bold text-lg">Sample Project 0${index + 1}</span>
-                        </div>
-                    </div>
-                `,
-                  )
-                  .join("")}
-            </div>
+          <div class="mb-12">
+            <p class="text-slate-600 text-xl leading-relaxed max-w-3xl">${data.description}</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            ${data.images
+              .map(
+                (img, index) => `
+              <div class="gallery-item group relative aspect-[4/3] bg-slate-100">
+                <img src="${img}" alt="${data.title} sample ${index + 1}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
+                  <span class="text-white font-bold text-lg">Sample Project 0${index + 1}</span>
+                </div>
+              </div>
+            `,
+              )
+              .join("")}
+          </div>
         `;
 
-        // Show Modal
         overlay.classList.add("active");
         document.body.classList.add("modal-open");
       }
@@ -1038,7 +1573,6 @@
         document.body.classList.remove("modal-open");
       }
 
-      // Accessibility: Close on Escape
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeService();
       });
@@ -1060,7 +1594,6 @@
 
       <div class="marquee-container">
         <div class="marquee-content">
-          <!-- Client Logos -->
           <img
             loading="eager"
             src="ASUS.png"
@@ -1141,7 +1674,6 @@
             class="client-logo-box"
           />
         </div>
-        <!-- Duplicate for seamless loop -->
         <div class="marquee-content" aria-hidden="true">
           <img
             loading="eager"
@@ -1223,7 +1755,6 @@
             class="client-logo-box"
           />
         </div>
-        <!-- Duplicate for seamless loop -->
         <div class="marquee-content" aria-hidden="true">
           <img
             loading="eager"
@@ -1473,8 +2004,6 @@
 
       contactForm.addEventListener("submit", function (event) {
         event.preventDefault();
-
-        // UI Loading State
         btnText.innerHTML = '<span class="loading-spinner"></span> Sending...';
         btn.disabled = true;
         btn.style.opacity = "0.7";
@@ -1484,12 +2013,10 @@
 
         emailjs.sendForm(serviceID, templateID, this).then(
           () => {
-            // UI Success State
             btnText.innerText = "Inquiry Sent Successfully!";
             btn.classList.replace("bg-teal-600", "bg-green-600");
             btn.style.opacity = "1";
             contactForm.reset();
-
             setTimeout(() => {
               btnText.innerText = "Send Inquiry";
               btn.disabled = false;
@@ -1497,7 +2024,6 @@
             }, 5000);
           },
           (err) => {
-            // UI Error State
             btnText.innerText = "Error Sending";
             btn.disabled = false;
             btn.style.opacity = "1";
@@ -1590,11 +2116,9 @@
                 </svg>
                 <a
                   class="text-slate-400 font-medium hover:text-teal-400 transition-colors"
+                  >boxhubjandv@gmail.com</a
                 >
-                  boxhubjandv@gmail.com
-                </a>
               </div>
-
               <div class="flex items-center gap-3 group">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -1614,9 +2138,8 @@
                 </svg>
                 <a
                   class="text-slate-400 font-medium hover:text-teal-400 transition-colors"
+                  >02-70062614</a
                 >
-                  02-70062614
-                </a>
               </div>
             </div>
           </div>
@@ -1641,6 +2164,7 @@
         </div>
       </div>
     </footer>
+
     <script>
       // Navbar Scroll Logic
       const navbar = document.getElementById("navbar");
@@ -1690,18 +2214,17 @@
       menuClose.addEventListener("click", closeMenu);
 
       // Intersection Observer for Animations
-      const observerOptions = {
-        threshold: 0.1,
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in-up");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate-fade-in-up");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
 
       document.querySelectorAll(".service-card").forEach((card) => {
         observer.observe(card);
